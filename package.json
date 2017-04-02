@@ -1,6 +1,6 @@
 {
   "name": "hhbuild",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "hhbuild": "./bin/hhbuild.js"
   },
