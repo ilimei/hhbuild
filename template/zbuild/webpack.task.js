@@ -56,7 +56,6 @@ gulp.task("detectPort",function(cb){
 });
 
 gulp.task("webpack",["detectPort"],function(cb){
-    console.info("what webpack")
     const DEFAULT_PORT =program.port || 3000;
 
     if(program.dev){
@@ -64,8 +63,6 @@ gulp.task("webpack",["detectPort"],function(cb){
     }else{
         config=ConfigFactory.getConfig();
     }
-
-    console.info(config)
 
     compiler = webpack(config,function(){
 
@@ -235,9 +232,7 @@ function addMiddleware(devServer) {
 }
 
 gulp.task("webpackDevServer",["webpack"],function(cb){
-    console.info("what")
     const DEFAULT_PORT =program.port || 3000;
-    console.info("what")
     let proxyConfig=require("../proxy");
     var devServer = new WebpackDevServer(compiler, {
         // Enable gzip compression of generated files.

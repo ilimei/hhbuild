@@ -33,7 +33,6 @@ gulp.task("checkBuildParam",function(cb){
 gulp.task("webpackBuild",["checkBuildParam"],function(cb){
     let resolveApp=program.resolveApp;
     const outPath=program.outPath?resolveApp(program.outPath):resolveApp("build");
-    console.info(+outPath)
     // First, read the current file sizes in build directory.
     // This lets us display how much they changed later.
     recursive(outPath, (err, fileNames) => {

@@ -28,9 +28,6 @@ exports.getDevConfig = function () {
     // Get environment variables to inject into our app.
     const env = getClientEnvironment(publicUrl);
     const resolveApp=program.resolveApp;
-    console.info(program.outPath?resolveApp(program.outPath):resolveApp("build"));
-    console.info("------")
-    console.info(env)
 
     return {
         // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
