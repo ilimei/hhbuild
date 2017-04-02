@@ -1,10 +1,6 @@
 {
-  "/bop": {
-    "target": "http://www.dhjyzf.com",
-    "changeOrigin": true
-  },
-  "/wxvote": {
-    "target": "http://192.168.6.110:8088",
+  "/baidu": {
+    "target": "http://www.baidu.com",
     "changeOrigin": true
   }
 }
