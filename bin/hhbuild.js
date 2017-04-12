@@ -28,7 +28,7 @@ function translateFile(){
 gulp.task("build",function(){
     console.info("start build "+projectName)
     startTime=new Date-0;
-    return  gulp.src(tmpPath+"/**/*")
+    return  gulp.src([tmpPath+"/**/*",tmpPath+"/.*"])
         .pipe(translateFile())
         .pipe(gulp.dest(process.cwd()+'/'+projectName));
 });
@@ -39,3 +39,4 @@ gulp.start("build",function(err,msg){
         console.error(err);
     }
 });
+
