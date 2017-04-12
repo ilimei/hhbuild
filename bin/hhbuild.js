@@ -8,10 +8,10 @@ const readline = require('readline');
 let startTime=0,
      projectName=process.argv[2];
 if(!projectName){
-    console.error("must set project name!!!");
+    console.error("use hhbuild projectName to create a new Project");
     process.exit(1);
 }
-
+console.info("hhbuild version 0.0.3");
 function translateFile(){
     return through.obj(function(file, enc, cb) {
         if(file.path.endsWith(".tmp")){
