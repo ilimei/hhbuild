@@ -50,11 +50,10 @@ gulp.task("webpackBuild",["checkBuildParam"],function(cb){
         fs.emptyDirSync(outPath);
 
         // Start the webpack build
-        build(previousSizeMap);
+        build(previousSizeMap,cb);
 
         // Merge with the public folder
         copyPublicFolder();
-        cb();
     });
 });
 
@@ -132,7 +131,7 @@ function printErrors(summary, errors) {
 }
 
 // Create the production build and print the deployment instructions.
-function build(previousSizeMap) {
+function build(previousSizeMap,cb) {
     const resolveApp=program.resolveApp;
     console.log('Creating an optimized production build...');
     let config=ConfigFactory.getConfig();
@@ -154,6 +153,7 @@ function build(previousSizeMap) {
 
         console.log(chalk.green('Compiled successfully.'));
         console.log();
+        cb();
 
         console.log('File sizes after gzip:');
         console.log();

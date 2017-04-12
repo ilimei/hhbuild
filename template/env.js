@@ -27,9 +27,9 @@ function getClientEnvironment(publicUrl) {
         });
     if (program.profile) {
         const resolveApp = program.resolveApp;
-        return Object.assign({'process.env': processEnv}, require(resolveApp(program.profile)));
+        return Object.assign({'process.env': processEnv,__DEV__:program.dev}, require(resolveApp(program.profile)));
     }
-    return {'process.env': processEnv};
+    return {'process.env': processEnv,__DEV__:program.dev};
 }
 
 module.exports = getClientEnvironment;
