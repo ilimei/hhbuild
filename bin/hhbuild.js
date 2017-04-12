@@ -11,7 +11,7 @@ if(!projectName){
     console.error("use hhbuild projectName to create a new Project");
     process.exit(1);
 }
-console.info("hhbuild version 0.0.3");
+console.info("hhbuild version 0.0.4");
 function translateFile(){
     return through.obj(function(file, enc, cb) {
         if(file.path.endsWith(".tmp")){
