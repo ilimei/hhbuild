@@ -64,9 +64,7 @@ gulp.task("webpack",["detectPort"],function(cb){
         config=ConfigFactory.getConfig();
     }
 
-    compiler = webpack(config,function(){
-
-    });
+    compiler = webpack(config);
 
     // "invalid" event fires when you have changed a file, and Webpack is
     // recompiling a bundle. WebpackDevServer takes care to pause serving the
