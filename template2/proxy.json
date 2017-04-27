@@ -1,0 +1,6 @@
+{
+  "/baidu": {
+    "target": "http://www.baidu.com",
+    "changeOrigin": true
+  }
+}

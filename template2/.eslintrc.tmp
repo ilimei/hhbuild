@@ -1,0 +1,11 @@
+{
+  "extends": "react-app",
+  "rules": {
+    "no-undef": 0, //未定义方法是否可以调用
+    "no-useless-constructor": 0, //空的constructor是否报错
+    "no-unused-vars":0,   //是否可以var定义 而不使用
+    "react/no-direct-mutation-state":0,  //是否可以直接操作state
+    "eqeqeq":0,            //是否三个等号替换两个等号 0 关闭
+    "no-extend-native":0 //是否可以扩展原生 0 关闭 1 warning 2 error
+  }
+}
