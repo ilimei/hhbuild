@@ -39,7 +39,7 @@ function translateFile(){
 gulp.task("build",function(){
     console.info("start build "+projectName)
     startTime=new Date-0;
-    return  gulp.src([tmpPath+"/**/*",tmpPath+"/.*"])
+    return  gulp.src([useTmpPath+"/**/*",useTmpPath+"/.*"])
         .pipe(translateFile())
         .pipe(gulp.dest(process.cwd()+'/'+projectName));
 });
