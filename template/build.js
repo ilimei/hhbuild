@@ -36,8 +36,14 @@ program.nodePaths = (process.env.NODE_PATH || '')
 
 if(program.dev) {
     gulp.start("webpackDevServer", function (err, msg) {
+        if(err){
+            console.error(err);
+        }
     });
 }else{
     gulp.start("webpackBuild", function (err, msg) {
+        if(err){
+            console.error(err);
+        }
     });
 }
