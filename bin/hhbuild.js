@@ -3,15 +3,26 @@ const gulp=require("gulp");
 const path=require("path");
 const through = require('through2');
 const tmpPath=path.resolve(__dirname,"../template");
-const readline = require('readline');
+const tmp2Path=path.resolve(__dirname,"../template2");
 
 let startTime=0,
      projectName=process.argv[2];
+     projectVersion=process.argv[3]||"2.0";
 if(!projectName){
     console.error("use hhbuild projectName to create a new Project");
     process.exit(1);
 }
-console.info("hhbuild version 0.0.4");
+
+let useTmpPath;
+switch (projectVersion){
+    case "1.0":useTmpPath=tmpPath;break;
+    case "2.0":useTmpPath=tmp2Path;break;
+    default:
+        console.error("the third param must 1.0 or 2.0 to choose which webpack version");
+        process.exit(1);
+}
+
+console.info("hhbuild version 0.1.0");
 function translateFile(){
     return through.obj(function(file, enc, cb) {
         if(file.path.endsWith(".tmp")){
