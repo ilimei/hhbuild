@@ -4,6 +4,7 @@ const path=require("path");
 const through = require('through2');
 const tmpPath=path.resolve(__dirname,"../template");
 const tmp2Path=path.resolve(__dirname,"../template2");
+const Commander=require("../lib/commander");
 
 let startTime=0,
      projectName=process.argv[2];
