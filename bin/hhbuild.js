@@ -23,6 +23,8 @@ if (!projectName) {
     process.exit(1);
 }
 
+const tmpPath = path.resolve(__dirname, "../template");
+const tmp2Path = path.resolve(__dirname, "../template2");
 let useTmpPath;
 switch (projectVersion) {
     case "1.0":
@@ -35,10 +37,9 @@ switch (projectVersion) {
         console.error("the third param must 1.0 or 2.0 to choose which webpack version");
         process.exit(1);
 }
+
 const gulp = require("gulp");
 const through = require('through2');
-const tmpPath = path.resolve(__dirname, "../template");
-const tmp2Path = path.resolve(__dirname, "../template2");
 
 console.info("hhbuild version " + version);
 function translateFile() {
