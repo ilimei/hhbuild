@@ -1,0 +1,30 @@
+.indexClass {
+	color: @primaryColor;
+}
+
+@-webkit-keyframes animationExample {
+	from {
+		width: 0;
+	}
+	to {
+		width: 100%;
+	}
+}
+
+@keyframes animationExample {
+	from {
+		width: 0;
+	}
+	to {
+		width: 100%;
+	}
+}
+
+.animateThis {
+	-webkit-animation: animationExample 2s;
+	animation: animationExample 2s;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}

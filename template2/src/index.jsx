@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import "./index.less"
 
 class Hello extends React.Component {
     static defaultProps = {}
@@ -13,9 +14,9 @@ class Hello extends React.Component {
     }
 
     render() {
-        return <div className="Hello">
+        return <div className="indexClass">
             {__DEV__?"true":"false"}
-            {JSON.stringify(list)}
+            {JSON.stringify(list)}123123
         </div>
     }
 }

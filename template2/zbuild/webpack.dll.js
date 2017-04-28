@@ -8,7 +8,7 @@ exports.getDLLConfig = function () {
     const resolveApp = program.resolveApp;
     return {
         entry: {
-            react: ['react', 'react-dom'],
+            dll: program.dll.split(/\s/g),
         },
         output: {
             path: path.resolve("./zbuild/template/dll"),

@@ -151,6 +151,8 @@ function build(previousSizeMap,cb) {
             process.exit(1);
         }
 
+        let costTime=stats.toJson({},true).time/1000;
+        console.log(chalk.green("cost time "+costTime+"s"));
         console.log(chalk.green('Compiled successfully.'));
         console.log();
         cb();

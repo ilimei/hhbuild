@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const clearConsole = require('react-dev-utils/clearConsole');
 const getProcessForPort = require('react-dev-utils/getProcessForPort');
 const prompt = require('react-dev-utils/prompt');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const formatWebpackMessages = require('./formatter/formatWebpackMessage');
 const ConfigFactory=require("./webpack.config");
 const WebpackDevServer = require('webpack-dev-server');
 const historyApiFallback = require('connect-history-api-fallback');
@@ -90,6 +90,7 @@ gulp.task("dllpack",function(cb){
             var isSuccessful = !messages.errors.length && !messages.warnings.length;
 
             if (isSuccessful) {
+                console.log(chalk.green("cost time "+(messages.time/1000)+"s"));
                 console.log(chalk.green('Compiled successfully!'+new Date()));
             }
 
@@ -117,7 +118,6 @@ gulp.task("dllpack",function(cb){
                 console.log('Use ' + chalk.yellow('// eslint-disable-next-line') + ' to ignore the next line.');
                 console.log('Use ' + chalk.yellow('/* eslint-disable */') + ' to ignore all warnings in a file.');
             }
-
             cb();
         }
     });
@@ -298,6 +298,7 @@ gulp.task("webpackDevServer",["webpack"],function(cb){
         var showInstructions = isSuccessful && (isInteractive || isFirstCompile);
 
         if (isSuccessful) {
+            console.log(chalk.green("cost time "+(messages.time/1000)+"s"));
             console.log(chalk.green('Compiled successfully!'+new Date()));
         }
 
