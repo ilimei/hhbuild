@@ -85,62 +85,108 @@ function makeStrLength(str, length) {
     return str;
 }
 
-let Commander = (function () {
-    let Commander = {};
-    let config = {};
-    let shortMap = {};
-    let version;
-    let usage = "";
-    let helperText = [];
-    Commander.options = function (shorterParam, param, valueParse, desc) {
-        helperText.push(makeStrLength("--" + param, 12) + makeStrLength("-" + shorterParam, 5) + desc);
-        config[shorterParam] = valueParse || "boolean";
-        config[param] = valueParse || "boolean";
-        shortMap[shorterParam] = param;
-        return Commander;
-    }
+function Commander(){
+    this.config={};
+    this.shortMap = {};
+    this.configCb={};
+    this._version="";
+    this.usage = "";
+    this.helperText = [];
+}
 
-    Commander.version = function (v) {
-        version = v;
-        return Commander;
-    }
+/**
+ *
+ * @param shorterParam
+ * @param param
+ * @param valueParse
+ * @param desc
+ * @return {Commander}
+ */
+Commander.prototype.options=function (shorterParam, param, valueParse, desc,callback){
+    this.helperText.push( makeStrLength("-" + shorterParam, 12)+makeStrLength("--" + param, 20) + desc);
+    this.config[shorterParam] = valueParse || "boolean";
+    this.config[param] = valueParse || "boolean";
+    this.configCb[param]=callback;
+    this.shortMap[shorterParam] = param;
+    return this;
+}
 
-    Commander.desc = function (desc) {
-        usage = desc;
-        return Commander;
-    }
+/**
+ *
+ * @param v
+ * @return {Commander}
+ */
+Commander.prototype.version=function(v){
+    this._version = v;
+    return this;
+}
 
-    Commander.parse = function (arr) {
-        let OPT = { unuse:[]};
-        for (let index = 0, len = arr.length; index < len; index++) {
-            let v = arr[index];
-            if (v.startsWith("--")) {
-                let param = v.replace("--", "");
-                index += valueParseFunc(config, param, OPT, arr, index + 1);
-            } else if (v.startsWith("-")) {
-                let param = v.replace("-", "");
-                let params = getParams(config, param);
-                params.forEach(function (pp) {
-                    index += valueParseFunc(config, shortMap[pp], OPT, arr, index + 1);
-                });
-            } else {
-                OPT.unuse.push(v);
-                continue;
+/**
+ *
+ * @param v
+ * @return {Commander}
+ */
+Commander.prototype.desc=function(desc){
+    this.usage = desc
+    return this;
+}
+
+/**
+ *
+ * @param arr
+ * @return {*}
+ */
+Commander.prototype.parse=function(arr){
+    let OPT = { unuse:[]};
+    for (let index = 0, len = arr.length; index < len; index++) {
+        let v = arr[index];
+        if (v.startsWith("--")) {
+            let param = v.replace("--", "");
+            index += valueParseFunc(this.config, param, OPT, arr, index + 1);
+        } else if (v.startsWith("-")) {
+            let param = v.replace("-", "");
+            let params = getParams(this.config, param);
+            let self=this;
+            params.forEach(function (pp) {
+                index += valueParseFunc(self.config, self.shortMap[pp], OPT, arr, index + 1);
+            });
+        } else {
+            OPT.unuse.push(v);
+            continue;
+        }
+    }
+    return OPT;
+}
+
+/**
+ * 执行命令
+ * @param arr
+ */
+Commander.prototype.execute=function(arr,prevProcess){
+    let program=this.parse(arr);
+    if(typeof prevProcess=="function"){
+        prevProcess(program);
+    }
+    for(var i in program){
+        if(program.hasOwnProperty(i)){
+            let cb=this.configCb[i];
+            if(typeof cb=="function"){
+                cb(program);
             }
         }
-        return OPT;
     }
+};
 
-    Commander.showHelp = function () {
-        console.info(`version ${version}`);
-        console.info(`usage : ${usage}`);
-        console.info("\nOptions:\n")
-        helperText.forEach(function (v) {
-            console.info(`\t${v}`);
-        });
-        console.info("\n");
-    }
-    return Commander;
-})();
+/**
+ *
+ */
+Commander.prototype.showHelp=function(){
+    console.info(`version ${this._version}`);
+    console.info(`usage : ${this.usage}`);
+    console.info("Options:")
+    this.helperText.forEach(function (v) {
+        console.info(`\t${v}`);
+    });
+}
 
-module.exports=Commander;
+module.exports=new Commander();

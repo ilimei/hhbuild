@@ -8,8 +8,8 @@ const webpack = require('webpack');
 const clearConsole = require('react-dev-utils/clearConsole');
 const getProcessForPort = require('react-dev-utils/getProcessForPort');
 const prompt = require('react-dev-utils/prompt');
-const formatWebpackMessages = require('./formatter/formatWebpackMessage');
-const ConfigFactory=require("./webpack.config");
+const formatWebpackMessages = require('./../formatter/formatWebpackMessage');
+const ConfigFactory=require("./../config/webpack.config.js");
 const WebpackDevServer = require('webpack-dev-server');
 const historyApiFallback = require('connect-history-api-fallback');
 const httpProxyMiddleware = require('http-proxy-middleware');
@@ -81,7 +81,7 @@ gulp.task("webpack",["detectPort"],function(cb){
 });
 
 gulp.task("dllpack",function(cb){
-    let config=require("./webpack.dll").getDLLConfig();
+    let config=require("./../config/webpack.dll.js").getDLLConfig();
     webpack(config,function(err,stats){
         if(err){
             cb(err);
@@ -157,7 +157,7 @@ function addMiddleware(devServer) {
         // Paths with dots should still use the history fallback.
         // See https://github.com/facebookincubator/create-react-app/issues/387.
         disableDotRule: true,
-        // For single page apps, we generally want to fallback to /index.html.
+        // For single _page apps, we generally want to fallback to /index.html.
         // However we also want to respect `proxy` for API calls.
         // So if `proxy` is specified, we need to decide which fallback to use.
         // We use a heuristic: if request `accept`s text/html, we pick /index.html.
@@ -217,7 +217,7 @@ function addMiddleware(devServer) {
 
 gulp.task("webpackDevServer",["webpack"],function(cb){
     const DEFAULT_PORT =program.port || 3000;
-    let proxyConfig=require("../proxy");
+    let proxyConfig=require("../../proxy");
     var devServer = new WebpackDevServer(compiler, {
         // Enable gzip compression of generated files.
         compress: true,
@@ -238,7 +238,7 @@ gulp.task("webpackDevServer",["webpack"],function(cb){
         // for files like `favicon.ico`, `manifest.json`, and libraries that are
         // for some reason broken when imported through Webpack. If you just want to
         // use an image, put it in `src` and `import` it from JavaScript instead.
-        contentBase: path.resolve(__dirname,"template"),
+        contentBase: path.resolve(__dirname,"../template"),
         // Enable hot reloading server. It will provide /sockjs-node/ endpoint
         // for the WebpackDevServer client so it can learn when the files were
         // updated. The WebpackDevServer client is included as an entry point
@@ -342,4 +342,4 @@ gulp.task("webpackDevServer",["webpack"],function(cb){
     });
 });
 
-require("./tasks/webpack.build");
+require("./webpack.build.js");

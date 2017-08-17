@@ -18,7 +18,7 @@ var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var recursive = require('recursive-readdir');
 var stripAnsi = require('strip-ansi');
 const gulp=require("gulp");
-const ConfigFactory=require("../webpack.config");
+const ConfigFactory=require("../config/webpack.config.js");
 var useYarn = true;
 
 gulp.task("checkBuildParam",function(cb){

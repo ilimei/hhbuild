@@ -15,8 +15,7 @@ class Hello extends React.Component {
 
     render() {
         return <div className="indexClass">
-            {__DEV__?"true":"false"}
-            {JSON.stringify(list)}123123
+            {__DEV__?"this is dev mode":"this is pub mode"}
         </div>
     }
 }

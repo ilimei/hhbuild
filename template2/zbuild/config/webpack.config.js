@@ -10,12 +10,12 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var ImportBaseLessPlugin = require("./plugins/importBaseLessPlugin");
+var ImportBaseLessPlugin = require("./../plugins/importBaseLessPlugin");
 
 var url = require('url');
-var getClientEnvironment = require('../env');
+var getClientEnvironment = require('../../env');
 const path = require("path");
-const Paths = require("./paths");
+const Paths = require("./../paths");
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -87,7 +87,7 @@ const jsAndJsxEsLint={
         {
             loader: 'eslint-loader',
             options: {
-                formatter: require('./eslint/formatter')
+                formatter: require('./../eslint/formatter')
             }
         }
     ],
@@ -223,6 +223,7 @@ exports.getDevConfig = function () {
     const resolveApp = program.resolveApp;
 
     return {
+        cache: true,
         // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
         // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
         devtool: 'cheap-module-source-map',
@@ -233,7 +234,7 @@ exports.getDevConfig = function () {
             // Include an alternative client for WebpackDevServer. A client's job is to
             // connect to WebpackDevServer by a socket and get notified about changes.
             // When you save a file, the client will either apply hot updates (in case
-            // of CSS changes), or refresh the page (in case of JS changes). When you
+            // of CSS changes), or refresh the _page (in case of JS changes). When you
             // make a syntax error, this client will display a syntax error overlay.
             // Note: instead of the default WebpackDevServer client, we use a custom one
             // to bring better experience for Create React App users. You can replace
@@ -242,7 +243,7 @@ exports.getDevConfig = function () {
             // require.resolve('webpack/hot/dev-server'),
             require.resolve('react-dev-utils/webpackHotDevClient'),
             // We ship a few polyfills.js by default:
-            require.resolve('./polyfills.js'),
+            require.resolve('../polyfills.js'),
             // Finally, this is your app's code:
             resolveApp(program.file)
             // We include the app code last so that if there is a runtime error during
@@ -273,6 +274,8 @@ exports.getDevConfig = function () {
             ]
         },
         plugins: [
+            // add cache
+            new webpack.HashedModuleIdsPlugin(),
             // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
             // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
             // In development, this will be an empty string.
@@ -282,7 +285,7 @@ exports.getDevConfig = function () {
             // Generates an `index.html` file with the <script> injected.
             new HtmlWebpackPlugin({
                 inject: true,
-                template: path.resolve(__dirname, "./template/index.html"),
+                template: path.resolve(__dirname, "../template/index.html"),
             }),
             // Makes some environment variables available to the JS code, for example:
             // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
@@ -300,7 +303,7 @@ exports.getDevConfig = function () {
             new WatchMissingNodeModulesPlugin(resolveApp('node_modules')),
             new webpack.DllReferencePlugin({
                 context: path.resolve('.'),
-                manifest: require("./dll/dll-manifest.json")
+                manifest: require("./../dll/dll-manifest.json")
             })
         ],
         // Some libraries import Node modules but don't use them in the browser.
@@ -318,13 +321,15 @@ exports.getConfig = function () {
     process.env.NODE_ENV = 'production';
     // Get environment variables to inject into our app.
     var env = getClientEnvironment(publicUrl);
+    console.info(env);
     const resolveApp = program.resolveApp;
     return {
         // Don't attempt to continue if there are any errors.
         bail: true,
+        cache: true,
         // We generate sourcemaps in production. This is slow but gives good results.
         // You can exclude the *.map files from the build during deployment.
-        // devtool: 'source-map',
+        devtool: 'source-map',
         // In production, we only want to load the polyfills and the app code.
         entry: [
             require.resolve('./polyfills'),
@@ -354,6 +359,10 @@ exports.getConfig = function () {
             ]
         },
         plugins: [
+            //打印进度
+            new webpack.ProgressPlugin({}),
+            //chunk做md5
+            new webpack.HashedModuleIdsPlugin(),
             // Makes the public URL available as %PUBLIC_URL% in index.html, e.g.:
             // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
             // In production, it will be an empty string unless you specify "homepage"
@@ -383,7 +392,7 @@ exports.getConfig = function () {
             // It is absolutely essential that NODE_ENV was set to production here.
             // Otherwise React will be compiled in the very slow development mode.
             new webpack.DefinePlugin(env),
-            // This helps ensure the builds are consistent if source hasn't changed:
+            // This helps ensure the builds are consistent if source hasn't change
             new webpack.optimize.OccurrenceOrderPlugin(),
             // Try to dedupe duplicated modules, if any:
             new webpack.optimize.DedupePlugin(),
@@ -414,7 +423,7 @@ exports.getConfig = function () {
             }),
             new webpack.DllReferencePlugin({
                 context: path.resolve('.'),
-                manifest: require("./dll/dll-manifest.json")
+                manifest: require("./../dll/dll-manifest.json")
             })
         ],
         // Some libraries import Node modules but don't use them in the browser.

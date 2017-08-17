@@ -134,6 +134,6 @@ function formatter(webpackJson){
 
 
 // console.info(new Error());
-// console.info("Error in\n\tat ("+path.resolve("../../src/page/Login.less")+":16:1)");
-// console.info("\tat (..\\..\\src\\page\\Login.less:16:1)\n");
+// console.info("Error in\n\tat ("+path.resolve("../../src/_page/Login.less")+":16:1)");
+// console.info("\tat (..\\..\\src\\_page\\Login.less:16:1)\n");
 module.exports=formatter;
